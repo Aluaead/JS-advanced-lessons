@@ -121,12 +121,125 @@ var a5 = {x:1,y:2};
 var b5 = {x:1,y:2};
 console.log(a5 === b5);//false
 console.log(a5.x === b5.x);//对象属性如果是基本类型内存分配在哪，比较时是值比较还是引用比较
-//true 
+//true    三等号先判断数据类型是否一样
 
 }());//立即执行表达式结束
 
+//demo05  
 
+(function(){//立即执行表达式开始
+	
+	//基本数据类型与引用数据类型的区别2
+	//函数参数传递方式不同
+	
+	//值传递
+	var str_a="hello world";
+	function fn_a(arg){
+		console.log(arg);//#1 -->hello world
+		arg="hai";
+		console.log(str_a,arg);//#2 -->hello world, hai
+	};
+	fn_a(str_a);
+	console.log(str_a);//#3 这时候str_a:"hello world"
+	
+	//从上面#1处可以看出，传入函数fn_a的是str_a的值
+	//并且内存中分配了新的空间来保存函数参数和其值(函数运行后自动释放这部分内存)
+	//所以在#2处打印的是2个不同的字符串。也正是因为传值时候对str_a值进行了值的复制，而这又是原始类型的值，
+	//所以在#3处的str_a与早先声明的str_a保持一致
+	
+	//引用传递
+	var obj_a={value:1};
+	function fn_a(arg){
+		arg.value=3;
+	};
+	fn_a(obj_a);
+	console.log(obj_a);  //这时候obj_a是{value:3}
+	
+	function fn_b(arg){
+		arg={value:2};//创建了一个新的对象，arg指向新对象
+	};
+	fn_b(obj_a);
+	console.log(obj_a);//这时候obj_a是{value:3}
+	
+	/*
+	 上面这个问题也可以从内存角度去理解，两个函数都是传地址，而这个地址引用了obj_a
+	 在内存中对象的对象，所以两个函数中的arg起初都是引用和obj_a同一个内存中的对象
+	 值，而fn_a中访问的依旧是和obj_a同一个内存对象，所以fn_a修改是成功的，但是在fn_b
+	 重新为arg赋值新的对象，arg指向新对象并不会影响obj_a
+	 */
+	
+	
+	
+}());//立即执行表达式结束
 
+//demo08
+
+//Bool类型的值只有两个true false
+
+//Undefined 的几种情况
+
+var a;
+console.log(a);//Undefined
+//注意：分清未定义与未声明的区别Undefined和Undeclare
+//没有加var 直接使用a是否会报错 会
+
+function foo(x,y){
+	console.log(x,y);//1 undefined
+}
+foo(1);
+
+function fee(){
+	//没有返回情况
+}
+var feereturnvalue=fee();
+console.log(feereturnvalue);//undefined
+
+//null  需要注意一点
+console.log(typeof null); //object
+
+//demo 09
+console.log("demo 09");
+//对象类型简述
+var obj={x:1,y:2};//obj 的原型是Object.prototype,并且obj继承的属性和方法都源于在这个模型
+console.log(obj._proto_===Object.prototype);//false
+console.log(Object.prototype);//Object{}
+
+var arr = [1,2,3,4,5];//arr的原型是Array.prototype,并且arr继承的属性和方法都源于这个原型
+console.log(arr.__proto__ === Array.prototype);//true
+console.log(Array.prototype);//[]
+console.log(arr.__proto__.__proto__ === Object.prototype);//true
+
+function foo() { //foo的原型是Function.prototype,并且foo继承的属性和方法都源于这个原型
+    console.log("foo function!");//true
+};
+console.log(foo.__proto__ === Function.prototype);//true
+console.log(foo.__proto__.__proto__ === Object.prototype);//true
+
+console.log(obj instanceof Object);//true
+console.log(arr instanceof Object);//true
+console.log(foo instanceof Object);//true
+console.log(foo === window.foo);//true
+
+//demo 10
+console.log("demo 10");
+
+//包装对象
+var a = 123;
+var b = new Number(a);
+
+console.log(a == b);
+console.log(a === b);//true or false 为什么
+
+//临时包装对象
+var str = "abcde";
+console.log(str.length);//5 临时包装成了String对象
+str.length = 1;
+console.log(str.length,str);//5 "abcde" 临时包装对象并不影响原始值
+
+var arr = [1,2,3,4];
+console.log(arr.length);//4
+arr.length = 1;
+console.log(arr.length,arr);//1 [1]
 
 
 
