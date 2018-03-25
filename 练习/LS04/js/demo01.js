@@ -111,3 +111,5 @@ switch(i){
     default:
         console.log("default");
 }
+
+//for in 一般用于遍历对象
