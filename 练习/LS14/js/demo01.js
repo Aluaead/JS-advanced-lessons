@@ -166,6 +166,98 @@ console.log("------------------");
 
 var names=Object.getOwnPropertyNames(obj2);
 console.log(names);
+console.log("------------------");
+
+var obj={_x:1};
+/*Object.defineProperty(obj,"y",{
+    configurable:false,
+    writable:false,
+    enumerable:true,
+    value:6
+});*/
+Object.defineProperties(obj,{
+    y:{value:2,writable:true,configurable:true,enumerable:true},
+    z:{value:2,writable:true,configurable:true,enumerable:true},
+    x:{
+        get:function(){return this._x;},
+        set:function (val) {
+            this._x = val;
+        }
+    }
+});
+//批量添加属性并设置属性特性
+var book={};
+//调用Object.defineProperties(对象名，要添加的属性)方法，为对象一次定义多个属性(1.数据属性)(2.访问器属性)
+Object.defineProperties(book,{
+     _year:{
+        value:2004,
+        writable:true
+        //(_year)前面的下划线表示只能通过对象方法访问的属性
+     },
+     edition:{
+        value:1,
+        writable:true
+     },
+     year:{
+        get:function(){
+            return this._year;
+        },
+        set:function(newValue){
+            if(newValue>2004){
+                this._year=newValue;
+                this.edition=newValue-2004;
+            }
+        }
+     }
+});
+book.year=2006;
+console.log(book.year);
+
+var empty={};
+var obj2=Object.create(empty,{
+    x:{value:1},y:{value:2,enumerable:true}
+});
+console.log(obj2);
+console.log(obj2.hasOwnProperty("x"));
+console.log(empty);//空
+
+//属性的继承特点
+var o1={};
+Object.defineProperty(o1,"x",{
+    value:12,
+    //writable:true 
+});//configurable和writable是false
+o1.x=34;
+console.log(o1.x);//12
+
+var o2=Object.create(o1);
+o2.x=56;
+console.log(o2.x);//12   如果writable为true  则o1和o2的x属性都能够更改
+
+var o3={_x:21};
+Object.defineProperty(o3,"x",{
+    get:function(){return this._x}
+});
+o3.x=34;
+console.log(o3.x);//21
+
+var o4=Object.create(o3);
+Object.defineProperty(o4,"x",{
+    set:function(val){
+        this._x=val;
+    },
+    get:function(){
+        return ++this._x;
+    }
+});
+o4.x=56;
+console.log(o4.x);//57
+
+//全局变量的属性特性是如何的呢？
+//{value: 23, writable: true, enumerable: true, configurable: false}
+var a = 23;
+console.log(Object.getOwnPropertyDescriptor(window,"a"));
+delete a;//等效delete window.a;
 
 
 
