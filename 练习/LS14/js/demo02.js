@@ -77,7 +77,74 @@ console.log(Object.getOwnPropertyNames(o5));
 
 console.log(o4.isPrototypeOf(o5));
 
+//part 1 js对象是否可扩展 isExtensible
+//新对象默认是可扩展的无论何种方式创建的对象，这里使用的是字面量方式
 
+var empty1={a:1};
+console.log(Object.isExtensible(empty1));//true
+
+//对象是否可以扩展与对象的属性是否可以配置无关
+empty2=Object.create({},{
+	"a":{
+		value:1,
+		configurable:false,//不可配置
+		enumerable:true,//可枚举
+		writable:true//可写
+	}
+});
+console.log(Object.isExtensible(empty2));
+
+//Object.isExtensible  Object.preventExtensions 实例
+(function (){
+	//Object.preventExtensions 将原对象变得不可扩展，并且返回原对象
+	var obj={};
+	var obj2=Object.preventExtensions(obj);
+	console.log(obj === obj2);//true
+
+	//新创建的对象默认是可扩展的
+	var empty ={};
+	console.log(Object.isExtensible(empty));//true
+	empty.a=1;
+
+	//将其变成不可扩展对象
+	Object.preventExtensions(empty);
+	console.log(Object.isExtensible(empty));//false
+
+	//使用传统的方式为不可扩展对象添加属性
+	empty.b=2;//静默失败，不抛出错误
+	empty["c"]=3;//静默失败，不抛出错误
+
+	//z在严格模式中，为不可扩展对象添加属性将抛出错误
+	(function fali(){
+		"use strict";
+		empty.d="4";//throws a TypeError
+	})();
+
+	//使用Object.defineProperty 方法为不可扩展对象添加新属性会抛出异常
+	Object.defineProperty(empty,"e",{value:5});
+	Object.defineProperty(empty,"a",{value:2});
+
+})();
+
+
+//part 2  JS对象是否密封   isSealed
+//如果对象不可扩展，而且所有属性的可配置特性为false，则该对象为密封的
+//对象
+(function(){
+	//新建对象默认不是密封的
+	var empty={};
+	console.log(Object.isSealed(empty));//false
+
+	//如果把一个空对象变得不可扩展，则他同时也会变成哥密封对象
+	Object.preventExtensions(empty);
+	console.log(Object.isSealed(empty));//true
+
+	//但如果这个对象不是空对象，则它不会变成密封对象，因为密封
+	//对象的所有自身属性必须是不可配置的
+	var hasProp={fee:"fie foe fum"}
+	Object.preventExtensions(hasProp);
+	
+})
 
 
 
