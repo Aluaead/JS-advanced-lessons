@@ -5,10 +5,10 @@ function f1(){
 	}
 	return f2();
 }
-var f3 = f1();
+var f5 = f1();
 //观察f1中的x变量
-console.log(f3);//输出？
-console.log(f3);//输出？
+console.log(f5);//输出？
+console.log(f5);//输出？
 
 var tmp = 100;//注意：词法作用域,形成的闭包是否包含此行的变量tmp？
 function foo(x) {
@@ -91,11 +91,11 @@ jack.setName("jack");
 console.log(jack.getName());
 
 //单利模式
-function fn() {
-    var a;
-    return function() {
-        return a || (a = document.body.appendChild(document.createElement('div')));
-    }
-};
-var f = fn();
-f();
+// function fn() {
+//     var a;
+//     return function() {
+//         return a || (a = document.body.appendChild(document.createElement('div')));
+//     }
+// };
+// var f = fn();
+// f();
