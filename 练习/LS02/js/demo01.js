@@ -21,7 +21,7 @@ console.log(typeof Date);//function
 console.log(typeof Number);//function
 
 console.log(typeof Math);//object
-console.log(typeof JSON)//object
+console.log(typeof JSON);//object
 
 //类型检测instanceof （左侧操作数为对象，右侧操作数为原型链中的一个类型时，返回为true。
 var a={name:"liwenxuan",age:21};
