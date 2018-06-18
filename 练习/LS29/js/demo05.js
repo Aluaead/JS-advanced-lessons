@@ -176,3 +176,15 @@ console.log(Object.entries(obj6));
 for (var [k, v] of Object.entries(obj6)) {
     console.log(k, v);
 }
+
+var obj7 = {
+    a: 1,
+    b: 2
+};
+var obj8 = Object.create(obj7);
+obj8.c = 3;
+obj8.d = 4;
+// Object.setPrototypeOf(obj8, obj7);
+console.log(obj8.a, obj8.b, obj8.c, obj8.d);
+console.log(Object.keys(obj8));
+//只能访问滋生属性，不能访问原型属性

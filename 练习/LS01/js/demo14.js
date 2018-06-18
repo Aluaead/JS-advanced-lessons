@@ -1,11 +1,52 @@
-function unique(arr){
-    var temp=new Array();
-    for(var i in arr){
-        if(temp.indexOf(arr[i])==-1){
-            temp.push(arr[i]);
-        }
+//JS对象
+//通过字面量创建
+var student = {
+    name: "Jack",
+    age: 23,
+    sayHi: function () {
+        console.log("Hi,i'm", this.name, ",i'm", this.age, "years old!");
     }
-    return temp;
+};
+console.log(student.name);
+console.log(student["age"]);
+console.log(student.sayHi);
+student.sayHi();
+
+//添加属性，删除属性
+student.id = 2015015001;
+console.log(student.id);
+delete student.id;
+console.log(student.id);
+
+//查看对象是否有某个属性 in   for...in   Object.keys()
+console.log("name" in student);
+for (var k in student) {
+    console.log(k, student[k]);
 }
-var arr1=[1,2,3,2,3,4,5,6];
-console.log(unique(arr1));
+console.log(Object.keys(student));
+
+//函数嵌套 与this问题初步了解
+var obj = {
+    foo: function () {
+        console.log("foo里的this:", this);
+
+        function fee() {
+            //"use strict"
+            console.log("fee里的this:", this);
+        }
+        fee();
+    }
+};
+obj.foo();
+
+//构造函数回顾 
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+Person.prototype.showInfo = function () {
+    console.log("Hi,i'm", this.name, ",i'm", this.age, "years old!");
+};
+
+var p1 = new Person("Mike", 60);
+p1.showInfo();
