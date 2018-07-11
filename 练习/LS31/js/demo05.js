@@ -1,4 +1,4 @@
-//Part 111111111111111111111111
+//Part 1
 var m = new Map();
 var o = {
     p: 'Hello World'
@@ -54,6 +54,7 @@ var map = new Map();
 map.set(['a'], 555);
 console.log(" ");
 console.log(map.get(['a'])); // undefined
+//判等 ['a']===['a']
 
 //思考：
 var map = new Map();
@@ -87,8 +88,8 @@ console.log(map.get(+0)); // 123
 
 
 
-//Part2222222222222222222222222222222222222222 Map相关方法
-//Map原型属性和方法/////////////////////////////////////////
+//Part 2 Map相关方法
+//Map原型属性和方法
 var map = new Map();
 map.set('foo', true);
 map.set('bar', false);
